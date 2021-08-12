@@ -26,14 +26,14 @@
         <form id="login_form" class="form-horizontal">
           <div class="form-group">
             <div class="col-sm-12 item">
-              <input type="text" class="form-control" id="username" name="username" required placeholder="请输入用户名">
+              <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
               <!-- 用户图标 -->
               <i class="glyphicon glyphicon-user"></i>
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-12 item">
-              <input type="password" class="form-control" id="password" name="password" required placeholder="请输入密码">
+              <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
               <!-- 密码图标 -->
               <i class="glyphicon glyphicon-lock"></i>
             </div>
@@ -48,7 +48,10 @@
     </div>
   </div>
 
+  <!-- 先引入jquery -->
   <script src="./libs/jquery/jquery.min.js"></script>
+  <!-- 再引入页面js -->
+  <script src="./js/login.js"></script>
 </body>
 
 </html>
