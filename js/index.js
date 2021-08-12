@@ -30,7 +30,10 @@ $(function () {
     $(this).find('.iconfont').toggleClass('rotate0')
   })
 
-
+  // 点击二级标签切换类名
+  $('.level02 li').on('click', function () {
+    $(this).addClass('active').siblings().removeClass('active')
+  })
 
 
 })
