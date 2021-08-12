@@ -26,7 +26,10 @@ $(function () {
   // 点击一级菜单控制二级菜单
   $('.level01').on('click', function () {
     $(this).next('.level02').stop().slideToggle()
+    // 点击一级菜单控制箭头的方向
+    $(this).find('.iconfont').toggleClass('rotate0')
   })
+
 
 
 
