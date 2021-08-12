@@ -6,10 +6,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>首页</title>
+  <script>
+    // 判断是否有token，没有的话阻止跳转出页面
+    const token = localStorage.getItem('token')
+    if (!token) {
+      location.href = 'login.html'
+    }
+  </script>
 </head>
 
 <body>
   <h1>欢迎您 xxx</h1>
+
+  <!-- 引入jquery文件 -->
+  <script src="./libs/jquery/jquery.min.js"></script>
+  <!-- <script src="./js/index.js"></script> -->
 </body>
 
 </html>
