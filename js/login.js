@@ -8,8 +8,20 @@ $(function () {
     const username = $('#username').val().trim()
     const password = $('#password').val().trim()
 
-    // js 打断点
-    // debugger
+    $.post('http://localhost:8080/api/v1/admin/user/login', { username, password }, res => {
+      if (res.code === 200) {
+        // 成功
+        // 将token  存储到本地
+        localStorage.setItem('token', res.token)
+
+        // 跳转到首页
+        location.href = 'index.html'
+      } else {
+        console.log('登录失败')
+        console.log(res)
+      }
+
+    })
 
   })
 
