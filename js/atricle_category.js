@@ -12,6 +12,7 @@ $(function () {
           // 利用模板引擎template来进行数据的渲染
           let html = template('newListTemp', res)
           $('#tbody').html(html)
+          console.log(res)
         } else {
           console.log('获取失败')
         }

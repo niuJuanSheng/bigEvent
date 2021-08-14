@@ -35,15 +35,9 @@
             <th class="text-center" width="100">操作</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>爱生活</td>
-            <td>热爱生活</td>
-            <td class="text-center">
-              <button class="edit btn btn-info btn-xs">编辑</button>
-              <button class="delete btn btn-danger btn-xs">删除</button>
-            </td>
-          </tr>
+        <tbody id="tbody">
+
+
         </tbody>
       </table>
     </div>
@@ -59,6 +53,7 @@
           <h4 class="modal-title" id="myModalLabel">新增分类</h4>
         </div>
         <div class="modal-body">
+
           <form id="addform">
             <div class="add_category">
               <div class="form-group">
@@ -76,6 +71,7 @@
               <button type="submit" class="btn btn-primary btn_opt">保存</button>
             </div>
           </form>
+
         </div>
       </div>
     </div>
@@ -119,7 +115,24 @@
   <!-- 引入js文件 -->
   <script src="./libs/jquery/jquery.min.js"></script>
   <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+  <!-- 引入模板引擎 -->
+  <script src="./libs/art-template/template-web.js"></script>
+  <!-- 引入页面js文件 -->
   <script src="./js/atricle_category.js"></script>
+
+  <!-- 数据渲染模板 -->
+  <script type="text/template" id="newListTemp">
+    {{each data}}
+     <tr>
+       <td>{{$value.name}}</td>
+       <td>{{$value.slug}}</td>
+       <td class="text-center">
+         <button class="edit btn btn-info btn-xs">编辑</button>
+         <button class="delete btn btn-danger btn-xs">删除</button>
+       </td>
+     </tr>
+    {{/each}}
+  </script>
 </body>
 
 </html>
