@@ -1,6 +1,9 @@
 
 $(function () {
 
+  // 定义一个全局变量，用来存储编辑数据的id
+  let editId
+
   // 获取所有的文章信息
   function getCategoryList() {
     $.ajax({
@@ -21,8 +24,9 @@ $(function () {
   }
   getCategoryList()
 
+
   // 文章列表新增分类
-  $('.btn_opt').on('click', function (e) {
+  $('#myModal .btn_opt').on('click', function (e) {
     // 阻止默认事件
     e.preventDefault
     // 获取输入的数据
@@ -46,7 +50,9 @@ $(function () {
           $('.categoryAlias').val("")
           // 关闭模态框
           $("#myModal").modal('hide')
+
           getCategoryList()
+
         } else {
           console.log('请求失败')
         }
@@ -57,5 +63,22 @@ $(function () {
   })
 
 
-  // 
+  // 绑定编辑的点击事件
+  $('#tbody').on('click', '.edit', function () {
+    // 显示模态框
+    $('#editModal').modal('show')
+    // 填充数据
+    $('#name').val($(this).parents('tr').data('value').name)
+    $('#slug').val($(this).parents('tr').data('value').slug)
+
+  })
+
+  // 绑定编辑分类的保存按钮事件
+  $('#editModal .btn_opt').on('click', function () {
+
+
+
+  })
+
+
 })
