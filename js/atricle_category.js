@@ -30,8 +30,8 @@ $(function () {
     // 阻止默认事件
     e.preventDefault
     // 获取输入的数据
-    let name = $('.categoryName').val().trim()
-    let slug = $('.categoryAlias').val().trim()
+    const name = $('.categoryName').val().trim()
+    const slug = $('.categoryAlias').val().trim()
 
     if (!name || !slug) {
       alert('请输入分类名')
@@ -71,12 +71,31 @@ $(function () {
     $('#name').val($(this).parents('tr').data('value').name)
     $('#slug').val($(this).parents('tr').data('value').slug)
 
+    // 获取当前点击的id
+    editId = $(this).parents('tr').data('value').id
+
   })
 
   // 绑定编辑分类的保存按钮事件
   $('#editModal .btn_opt').on('click', function () {
 
-
+    const name = $('#name').val()
+    const slug = $('#slug').val()
+    // 发起post请求
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:8080/api/v1/admin/category/edit',
+      headers: { Authorization: localStorage.getItem('token') },
+      data: {
+        id: editId,
+        name, slug
+      },
+      success(res) {
+        // 关闭模态框
+        $('#editModal').modal('hide')
+        getCategoryList()
+      }
+    })
 
   })
 
