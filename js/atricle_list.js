@@ -1,5 +1,4 @@
 
-
 $(function () {
 
   // 全局变量，请求参数
@@ -16,7 +15,7 @@ $(function () {
     perpage: ''
   }
 
-
+  // 发起异步请求
   function articleQuery() {
     // 获取数据，发请求
     $.ajax({
@@ -39,6 +38,7 @@ $(function () {
   }
   articleQuery()
 
+  // 利用layui实现分页组件
   function renerPager(totalCount) {
     var laypage = layui.laypage;
 
@@ -62,7 +62,26 @@ $(function () {
     });
   }
 
+  // 发起异步请求获取所有文章类别
+  function selCategory() {
+    $.ajax({
+      url: 'http://localhost:8080/api/v1/admin/category/list',
+      headers: { Authorization: localStorage.getItem('token') },
+      success(res) {
+        if (res.code === 200) {
+          let html = ` <option value="">所有分类</option>
+          <option>未分类</option>`
+          $.each(res.data, (i, val) => {
+            html += `<option>${val.name}</option>`
+          })
+          $('#selCategory').html(html)
+        } else {
+          console.log('获取失败')
+        }
+      }
+    })
 
-
+  }
+  selCategory()
 
 })
