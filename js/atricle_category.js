@@ -91,13 +91,44 @@ $(function () {
         name, slug
       },
       success(res) {
-        // 关闭模态框
-        $('#editModal').modal('hide')
-        getCategoryList()
+        if (res.code === 200) {
+          // 关闭模态框
+          $('#editModal').modal('hide')
+          getCategoryList()
+        } else {
+          console.log('获取失败')
+        }
       }
     })
 
   })
 
+
+  // 绑定删除分类按钮的绑定事件
+  $('#tbody').on('click', '.delete', function () {
+
+    // 获取当前点击的id值
+    const id = $(this).parents('tr').data('value').id
+    // 发起post请求
+    $.ajax({
+      type: 'POST',
+      url: "http://localhost:8080/api/v1/admin/category/delete",
+      headers: { Authorization: localStorage.getItem('token') },
+      data: { id },
+      success(res) {
+        if (res.code === 200) {
+          if (confirm('确定删除吗')) {
+            getCategoryList()
+          }
+
+        } else {
+          console.log('获取失败')
+          console.log(res)
+        }
+      }
+    })
+
+
+  })
 
 })
