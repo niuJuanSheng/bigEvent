@@ -76,7 +76,7 @@
   <!-- 定义模板引擎 -->
   <script type="text/template" id="atricleListTemp">
     {{each data}}
-      <tr>
+      <tr data-id={{$value.id}}>
         <td>{{$value.title}}</td>
         <td>{{$value.author}}</td>
         <td>{{$value.category}}</td>

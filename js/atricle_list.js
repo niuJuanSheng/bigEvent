@@ -17,6 +17,7 @@ $(function () {
 
   // 发起异步请求
   function articleQuery() {
+
     // 获取数据，发请求
     $.ajax({
       url: 'http://localhost:8080/api/v1/admin/article/query',
@@ -29,6 +30,8 @@ $(function () {
           // 获取分页的总条数
           const totalCount = res.data.totalCount
           renerPager(totalCount)
+          console.log(res)
+
         } else {
           console.log('获取失败')
         }
@@ -69,11 +72,12 @@ $(function () {
       headers: { Authorization: localStorage.getItem('token') },
       success(res) {
         if (res.code === 200) {
-          let html = ` <option value="">所有分类</option>
-          <option>未分类</option>`
-          $.each(res.data, (i, val) => {
-            html += `<option>${val.name}</option>`
-          })
+          // let html = ` <option value="">所有分类</option>
+          // <option>未分类</option>`
+          // $.each(res.data, (i, val) => {
+          //   html += `<option>${val.name}</option>`
+          // })
+          const html = res.data.reduce((html, v) => html += `<option value="${v.id}">${v.name}</option>`, '<option value="">所有分类</option><option value="">未分类</option>')
           $('#selCategory').html(html)
         } else {
           console.log('获取失败')
@@ -83,5 +87,68 @@ $(function () {
 
   }
   selCategory()
+
+  // 点击筛选按钮
+  $('#btnSearch').on('click', (e) => {
+    e.preventDefault
+    params.key = $('#aname').val().trim()
+    params.state = $('#selStatus').val()
+    params.type = $('#selCategory').val()
+
+
+    // 重新渲染页面
+    articleQuery()
+
+  })
+
+
+  // 绑定重置按钮的点击事件
+  $('#btnSearch').next().on('click', (e) => {
+    e.preventDefault
+    // 重置组件
+    $('#aname').val('')
+    $('#selStatus').val('')
+    $('#selCategory').val('')
+
+    params = {
+      key: '',
+      type: '',
+      state: '',
+      page: '1',
+      perpage: ''
+    }
+    articleQuery()
+  })
+
+  // 删除功能
+  $('tbody').on('click', '.text-center .delete', function () {
+    // $(this).attr('id', $(this).parents('tr').data('id'))
+    const id = $(this).parents('tr').data('id')
+    console.log(id)
+    layer.confirm('确定要删除吗?', function (index) {
+      // 发起post请求
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost:8080/api/v1/admin/article/delete',
+        headers: { Authorization: localStorage.getItem('token') },
+        data: { id },
+        success(res) {
+          if (res.code === 200) {
+            articleQuery()
+            layer.close(index);
+          } else {
+            console.log('获取失败')
+            console.log(res)
+          }
+        }
+      })
+    })
+
+
+  })
+
+
+
+
 
 })
