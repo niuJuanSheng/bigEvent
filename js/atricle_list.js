@@ -30,7 +30,7 @@ $(function () {
           // 获取分页的总条数
           const totalCount = res.data.totalCount
           renerPager(totalCount)
-          console.log(res)
+          // console.log(res)
 
         } else {
           console.log('获取失败')
