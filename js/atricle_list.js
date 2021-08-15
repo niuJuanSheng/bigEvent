@@ -72,11 +72,6 @@ $(function () {
       headers: { Authorization: localStorage.getItem('token') },
       success(res) {
         if (res.code === 200) {
-          // let html = ` <option value="">所有分类</option>
-          // <option>未分类</option>`
-          // $.each(res.data, (i, val) => {
-          //   html += `<option>${val.name}</option>`
-          // })
           const html = res.data.reduce((html, v) => html += `<option value="${v.id}">${v.name}</option>`, '<option value="">所有分类</option><option value="">未分类</option>')
           $('#selCategory').html(html)
         } else {
