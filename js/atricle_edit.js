@@ -27,10 +27,13 @@ $(function () {
       success(res) {
         const html = template('art_category', res)
         $('#category').html(html)
+        articleInfo()
       }
     })
   }
 
+  // 2. 动态渲染下拉列表-文章类别
+  getCategoryList()
 
   // 3. 初始化 layui的日期选择框
   function initDate() {
@@ -75,8 +78,7 @@ $(function () {
           $('#coverimg').prop('src', res.data.cover)
           // 富文本内容的获取
           $('#articleContent').html(res.data.content)
-          // 2. 动态渲染下拉列表-文章类别
-          getCategoryList()
+
         } else {
           console.log('获取失败')
         }
