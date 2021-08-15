@@ -60,28 +60,32 @@ $(function () {
 
 
   // 发起请求
-  function infoCategory() {
+  function articleInfo() {
     $.ajax({
       url: 'http://localhost:8080/api/v1/admin/article/search',
       data: { id },
       headers: { Authorization: localStorage.getItem('token') },
       success(res) {
-        console.log(res)
-        $('[name="title"]').val(res.data.title)
-        $('[name="categoryId"]').val(res.data.categoryId)
-        $('[name="date"]').val(res.data.date)
-        // 图片获取
-        $('#coverimg').prop('src', res.data.cover)
-        // 富文本内容的获取
-        $('#articleContent').html(res.data.content)
-        // 2. 动态渲染下拉列表-文章类别
-        getCategoryList()
+
+        if (res.code === 200) {
+          $('[name="title"]').val(res.data.title)
+          $('[name="categoryId"]').val(res.data.categoryId)
+          $('[name="date"]').val(res.data.date)
+          // 图片获取
+          $('#coverimg').prop('src', res.data.cover)
+          // 富文本内容的获取
+          $('#articleContent').html(res.data.content)
+          // 2. 动态渲染下拉列表-文章类别
+          getCategoryList()
+        } else {
+          console.log('获取失败')
+        }
 
       }
     })
   }
 
-  infoCategory()
+  articleInfo()
 
 
   // 5. 发布点击事件
