@@ -7,6 +7,9 @@
 
 2 发布按钮
   1 绑定点击事件
+  2 获取到对应的数据 表单的数据
+  3 拼接参数 发送到后台 完成新增
+  4 重新跳转到文章的列表页面
 */
 
 $(function () {
@@ -65,41 +68,42 @@ $(function () {
   // 4. 初始化 tinymce 富文本编辑器
   initTinymce()
 
-  // 获取富文本框的内容
-  $('#release').on('click', function () {
+  // 5. 发布点击事件
+  function releaseCategory(ele, state) {
+    // 5. 绑定点击事件
+    $(ele).on('click', function () {
 
-    // 使用formData获取内容
-    const formdata = new FormData($('#form')[0])
-    // 追加文本域内容
-    formdata.append('content', tinyMCE.editors['articleContent'].getContent())
-    // 追加发布状态
-    formdata.append('state', '已发布')
+      // 使用formData 获取到对应的数据 表单的数据
+      const formdata = new FormData($('#form')[0])
+      // 追加文本域内容
+      formdata.append('content', tinyMCE.editors['articleContent'].getContent())
+      // 追加发布状态
+      formdata.append('state', state)
 
-    $.ajax({
-      type: 'POST',
-      url: 'http://localhost:8080/api/v1/admin/article/publish',
-      data: formdata,
-      // 请求头
-      contentType: false,
-      processData: false,
-      headers: { Authorization: localStorage.getItem('token') },
-      success(res) {
-        if (res.code === 200) {
-          console.log(res)
-          location.href = 'atricle_list.html'
-        } else {
-          console.log('获取失败')
+      // 拼接参数 发送到后台 完成新增
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost:8080/api/v1/admin/article/publish',
+        data: formdata,
+        // 请求头
+        contentType: false,
+        processData: false,
+        headers: { Authorization: localStorage.getItem('token') },
+        success(res) {
+          if (res.code === 200) {
+            console.log(res)
+            // 重新跳转到文章的列表页面
+            location.href = 'atricle_list.html'
+          } else {
+            console.log('获取失败')
+          }
         }
-      }
 
+      })
     })
-
-
-
-
-
-
-  })
+  }
+  releaseCategory('#release', '已发布')
+  releaseCategory('.btn-draft', '')
 
 
 
